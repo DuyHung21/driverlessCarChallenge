@@ -67,6 +67,7 @@
 	    		if (pValue != NULL) {
 	                result = PyLong_AsLong(pValue);
 	                Py_DECREF(pValue);
+	                PyObject_CallObject(close_predict, NULL);
 	            } else {
 	            	Py_DECREF(predict);
 	            	Py_DECREF(close_predict);
@@ -81,6 +82,11 @@
 	        fprintf(stderr, "Failed to load \"%s\"\n", "predictTS");
 	        result = -1;
 	    }
+
+	    Py_XDECREF(init_predict);
+	    Py_XDECREF(predict);
+	    Py_XDECREF(close_predict);
+	    Py_DECREF(pModule);
 
 	    Py_Finalize();
 	    return result;
@@ -100,4 +106,5 @@
 
 		return 0;
 	}
+
 
