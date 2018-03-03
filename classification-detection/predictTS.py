@@ -58,7 +58,7 @@ def is_ts(image):
     return True
 
 
-def init():
+def init(current_dir = '.'):
     global detection_graph
     global sess
     global image_tensor
@@ -69,7 +69,7 @@ def init():
     detection_graph = tf.Graph()
     with detection_graph.as_default():
         od_graph_def = tf.GraphDef()
-        with tf.gfile.GFile('checkpoint/frozen_model.pb', 'rb') as fid:
+        with tf.gfile.GFile(current_dir+'/checkpoint/frozen_model.pb', 'rb') as fid:
             serialized_graph = fid.read()
             od_graph_def.ParseFromString(serialized_graph)
             tf.import_graph_def(od_graph_def, name='')
